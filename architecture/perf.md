@@ -112,7 +112,8 @@ try for instance
 ``~/pmu-tools/toplev.py -l3  -v --single-thread taskset -c 10  --show-sample python randgNP.py``
 (instead of 10 use your "student number", this is to limit runinng on one cpu, one for each student)
 then run what suggested for sampling (but instead of -g use ``--call-graph=dwarf`` ``or --call-graph=lbr``
-display the results with either ``perf report -g graph,0.05,caller`` or ``perf report -g graph,0.05,callee``
+display the results with either ``perf report -g graph,0.05,caller`` or ``perf report -g graph,0.05,callee`` or the simple
+``perf report -g none --no-children``
 You can add ``--stdio`` to have the graph printed on the screen on in a file
 
 
