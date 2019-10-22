@@ -18,7 +18,7 @@ exercise will introduce you to the basic mechanics of using Valgrind.
 
 Build [`memerrors.cpp`]({{site.exercises_repo}}/hands-on/cpp/memerrors.cpp):
 
-    [student@esc cpp]$ scl enable devtoolset-7 bash
+    [student@esc cpp]$ scl enable devtoolset-8 bash
     [student@esc cpp]$ g++ -g -o memerrors memerrors.cpp
 
 Run the test program under valgrind:
