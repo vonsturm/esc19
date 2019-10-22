@@ -4,37 +4,43 @@ layout: main
 section: parallelism
 ---
 
-Some of you are sharing the same machine and some time measurements can be influenced by other users running at the very same moment. It can be necessary to run time measurements multiple times. Offloading tasks for your intelligence to Google and Stackoverflow many times is a very good idea, but not this week. Try not to use it. If you have any questions ask me and probably we will Google it together ;-)
-~~~
-$ wget www.cern.ch/felice.pantaleo/intro_cuda/exercises_2018.tar.gz
-$ tar -xzf exercises_2018.tar.gz
-$ cd cuda_exercises
-~~~
+Some of you are sharing the same machine and some time measurements can be influenced by other users running at the very same moment. It can be necessary to run time measurements multiple times. Offloading tasks for your intelligence to Google and Stackoverflow many times is a very good idea, but maybe not this week.
+
+The CUDA Runtime API reference manual is a very useful source of information:
+<a href="http://docs.nvidia.com/cuda/cuda-runtime-api/index.html" target="_blank">http://docs.nvidia.com/cuda/cuda-runtime-api/index.html</a>
+
+```bash
+$ cd esc19/hands-on/cuda_exercises
+```
 
 
 Check that your environment is correctly configured to compile CUDA code by running:
-~~~
-$ module load  compilers/cuda-10.0
+```
+$ module load compilers/gcc-7.3.0_sl7
+$ module load compilers/cuda-10.1
 $ nvcc --version
 nvcc: NVIDIA (R) Cuda compiler driver
-Copyright (c) 2005-2018 NVIDIA Corporation
-Built on Sat_Aug_25_21:08:01_CDT_2018
-Cuda compilation tools, release 10.0, V10.0.130
-~~~
+Copyright (c) 2005-2019 NVIDIA Corporation
+Built on Sun_Jul_28_19:07:16_PDT_2019
+Cuda compilation tools, release 10.1, V10.1.243
+```
 
 Compile and run the `deviceQuery` application:
 ~~~
-$ module load compilers/gcc-7.3.0_sl7 compilers/cuda-10.0
-$ /home/HPC/fpantaleohpc/samples/1_Utilities/deviceQuery/deviceQuery
+$ cd esc19/hands-on/cuda_exercises/utils/deviceQuery
+$ make
 ~~~
 
 You can get some useful information about the features and the limits that you will find on the device you will be running your code on. For example:
 ~~~
 ./deviceQuery Starting...
+
  CUDA Device Query (Runtime API) version (CUDART static linking)
-Detected 1 CUDA Capable device(s)
+
+Detected 2 CUDA Capable device(s)
+
 Device 0: "Tesla K40m"
-  CUDA Driver Version / Runtime Version          9.2 / 9.2
+  CUDA Driver Version / Runtime Version          10.1 / 10.0
   CUDA Capability Major/Minor version number:    3.5
   Total amount of global memory:                 11441 MBytes (11996954624 bytes)
   (15) Multiprocessors x (192) CUDA Cores/MP:    2880 CUDA Cores
@@ -61,14 +67,13 @@ Device 0: "Tesla K40m"
   Alignment requirement for Surfaces:            Yes
   Device has ECC support:                        Enabled
   Device supports Unified Addressing (UVA):      Yes
-  Device PCI Bus ID / PCI location ID:           130 / 0
+  Device PCI Bus ID / PCI location ID:           2 / 0
   Compute Mode:
-  < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
-deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 9.2, CUDA Runtime Version = 9.2, NumDevs = 1, Device0 = Tesla K40m
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
 ~~~
 Some of you are sharing the same machine and some time measurements can be influenced by other users running at the very same moment. It can be necessary to run time measurements multiple times.
-Offloading tasks for your intelligence to Google and Stackoverflow many times is a very good idea, but not this week.
-Try not to use it. If you have any questions ask me and probably we will Google it together ;-)
+
 
 ### Exercise 1. CUDA Memory Model
 In this exercise you will learn what heterogeneous memory model means, by demonstrating the difference between host and device memory spaces.
@@ -100,7 +105,7 @@ By completing this exercise you will learn how to configure and launch a simple 
 ### Exercise 3. Two-dimensional grid
 M is a matrix of NxN integers.
 1. Set N=4
-2. Write a kernel that sets each element of the matrix to its linear index (e.g. M[2,3] = 2*N + 3), by making use of two-dimensional grid and blocks.
+2. Write a kernel that sets each element of the matrix to its linear index (e.g. M[2,3] = 2*N + 3), by making use of two-dimensional grid and blocks. (Two-dimensional means using the x and y coordinates).
 3. Copy the result to the host and check that it is correct.
 4. Try with a rectangular matrix 19x67. Hint: check the kernel launch parameters.
 
@@ -169,7 +174,7 @@ An atomic function performs a read-modify-write atomic operation on one 32-bit o
 The operation is atomic in the sense that it is guaranteed to be performed without interference from other threads.
 
 
-~~~
+```
 int atomicAdd(int* address, int val);
 unsigned int atomicAdd(unsigned int* address,
                        unsigned int val);
@@ -179,12 +184,9 @@ float atomicAdd(float* address, float val);
 double atomicAdd(double* address, double val);
 __half2 atomicAdd(__half2 *address, __half2 val);
 __half atomicAdd(__half *address, __half val);
-~~~
+```
 
 reads the 16-bit, 32-bit or 64-bit word old located at the address address in global or shared memory, computes (old + val), and stores the result back to memory at the same address. These three operations are performed in one atomic transaction. The function returns old.
 
 
-### Useful links
 
-
-<a href="http://docs.nvidia.com/cuda/cuda-runtime-api/index.html" target="_blank">http://docs.nvidia.com/cuda/cuda-runtime-api/index.html</a>

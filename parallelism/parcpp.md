@@ -47,7 +47,7 @@ auto stop = std::chrono::system_clock::now();
 std::chrono::duration<double> dur= stop - start;
 std::cout << dur.count() << " seconds" << std::endl;
 ~~~
-### Reduction
+### Exercise 1. Reduction
 
 ~~~
 #include <iostream>
@@ -96,7 +96,7 @@ for (auto& t : v) {
 }
 ~~~
 
-### Numerical Integration
+### Exercise 2. Numerical Integration
 ~~~
 #include <iostream>
 #include <iomanip>
@@ -126,7 +126,7 @@ int main()
 
 
 
-### pi with Montecarlo
+### Exercise 3. pi with Montecarlo
 
 ![](montecarlo_pi.png){:height="400px" }.
 
@@ -269,7 +269,7 @@ int main()
 }
 ~~~
 
-### Graph Traversal
+### Bonus: Graph Traversal
 
 Generate a direct acyclic graph represented as a `std::vector<Vertex> graph` of 20 vertices:
 ~~~
