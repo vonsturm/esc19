@@ -20,7 +20,7 @@ void stop(const char * m) {
   std::cout << "total live " << memory_usage::totlive() << std::endl;
   char c;
   std::cout << "continue?";
-  std::cin >> c;
+  std::cin  >> c;
 
   start = std::chrono::high_resolution_clock::now();
 }
