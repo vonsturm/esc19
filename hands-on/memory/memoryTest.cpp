@@ -30,6 +30,7 @@ void __attribute__ ((noinline))
 touch(int * v, uint32_t size) {
 
   auto stride = std::max(1U,size/100);
+  std::cout << "access elements each " << stride << std::endl;
   auto e = v+size;
   for(;v<e; v+=stride) (*v)=1;
 
@@ -77,7 +78,7 @@ void cArray(size_t N) {
     auto v = new int[N];
     stop("carray: after create");
     v[0]=1;
-    stop("carray: after assign 0");
+    stop("carray: after assign element 0");
     touch(v,N);
     stop("carray: after touch");
 
@@ -143,7 +144,7 @@ int main() {
 
   constexpr size_t N = 200*1000*1000;
 
-  cArray(N);
+  cArray(N/2);
   stop("after cArray");
   cppVector(N);
   stop("after cppVector");
