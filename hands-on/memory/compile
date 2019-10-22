@@ -1,4 +1,4 @@
-c++ -g -O3 -march=native -std=c++17 -Wall $1 memory_usage.cc /usr/lib64/libjemalloc.so.1 -ldl -o $USER
+c++ -g -O3 -march=native -std=c++17 -Wall $1 memory_usage.cc /usr/lib64/libjemalloc.so.1 -ldl -o ${USER}_test
 # c++ -O2 -march=native -std=c++17 -Wall matrix.cpp -ftree-vectorize
 # c++ -O3 -march=native -std=c++17 -Wall matrix.cpp  -fno-loop-interchange
 
