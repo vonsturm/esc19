@@ -27,6 +27,7 @@ void stop(const char * m) {
 
 
 void __attribute__ ((noinline))
+
 touch(int * v, uint32_t size) {
 
   auto stride = std::max(1U,size/100);
@@ -37,41 +38,6 @@ touch(int * v, uint32_t size) {
 }
 
 
-void __attribute__ ((noinline))
-g(int * v, uint32_t size) {
-
-  stop("in g");
-
-  int a[size];
-  stop("g: before touch");
-  touch (a,size);
-  stop("g: after touch");
-  v[size/2] = a[size/4]; 
-  stop("g: after assign");
-  
-}
-
-
-void __attribute__ ((noinline))
-f(uint32_t size) {
-
-  stop("in f");
-  if (size<5) return;
-  stop("f: after if");
-  int a[size];
-  stop("f: before touch");
-  touch (a,size);
-  stop("f: after touch");
-  g(a,size);
-  stop("f: after g");
-  
-}
-
-
-
-
-  
-  
 void cArray(size_t N) {  
 
 //    auto v = std::make_unique<int[]>(N);
@@ -90,8 +56,10 @@ template<typename T>
 struct W {
   W(){}
   W(T t):v(t){}
+  W & operator=(T const & t) { v=t;}
   T v;
 };
+
 
 void cppVector(size_t N) { 
 
@@ -108,7 +76,7 @@ void cppVector(size_t N) {
     stop("cppVector after touch");
     std::cout << "size,capacity " << v.size() << ' ' << v.capacity() << std::endl;
  
- }
+}
 
 
 void cppVectorFill(size_t N) { 
@@ -120,7 +88,8 @@ void cppVectorFill(size_t N) {
     for (size_t i=0; i<N; i+=N/10000) v.push_back(i); 
     std::cout << "size,capacity " << v.size() << ' ' << v.capacity() << std::endl;
     stop("cppVector after push_back");
- }
+
+}
 
 
 
@@ -148,7 +117,7 @@ int main() {
   stop("after cArray");
   cppVector(N);
   stop("after cppVector");
-  cppVectorFill(N);
+  cppVectorFill(2*N);
   stop("after cppFill");
   
   stop("stop");
