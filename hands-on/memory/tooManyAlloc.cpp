@@ -7,6 +7,7 @@ namespace {
   int ns = 0;
   int nis = 0;
   int nd=0;
+  int nid=0;
   int nc=0;
   int na=0;
 }
@@ -30,7 +31,7 @@ void zero () {
 struct A {
   
   A() : i(0), v(10000){++nd;}
-  explicit A(int ii, int s=10000) : i(ii), v(s){}
+  explicit A(int ii, int s=10000) : i(ii), v(s){++nid;}
   A(const A& a) : i(a.i), v(a.v) {++nc;}
   A(const A&& a) noexcept : i(a.i), v(std::move(a.v)) {++nm;}
   A& operator=(A const & a) {
@@ -76,8 +77,9 @@ int main() {
   }
 
   std::cout << "size " << a.size() << std::endl;
-  std::cout << "number of swaps " << ns << " " << nis << std::endl;
-  std::cout << "number of copy " << nc << " " << na << " " << nd << std::endl;
+  std::cout << "number of swap " << ns << " " << nis << std::endl;
+  std::cout << "number of construct " << " " << nd << " " << nid << std::endl;
+  std::cout << "number of copy " << nc << " " << na << std::endl;
   std::cout << "number of move " << nm << " " << nma  << std::endl;
 
   return 0;
