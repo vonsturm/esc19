@@ -33,7 +33,7 @@ struct A {
   A() : i(0), v(10000){++nd;}
   explicit A(int ii, int s=10000) : i(ii), v(s){++nid;}
   A(const A& a) : i(a.i), v(a.v) {++nc;}
-  A(const A&& a) noexcept : i(a.i), v(std::move(a.v)) {++nm;}
+  A(A&& a) noexcept : i(a.i), v(std::move(a.v)) {++nm;}
   A& operator=(A const & a) {
     i=a.i; v=a.v; 
     ++na;
