@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "g++ -Wall -lpthread -std=c++17 hello_world.cpp -o hello_world"
+g++ -Wall -lpthread -std=c++17 hello_world.cpp -o hello_world

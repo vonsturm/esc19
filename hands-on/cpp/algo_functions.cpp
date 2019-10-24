@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <execution>
 
 std::ostream& operator<<(std::ostream& os, std::vector<int> const& c);
 std::vector<int> make_vector(int N);
@@ -17,15 +18,24 @@ int main()
 
   // multiply all the elements of the vector
   // use std::accumulate
+  uint64_t mult = std::accumulate(v.begin(),v.end(),1,std::multiplies<>{});
+  std::cout << mult << std::endl;
 
   // sort the vector in descending order
   // use std::sort
+  std::sort(v.begin(),v.end(),std::greater<>{});
+  std::cout << v << '\n';
 
   // move the even numbers at the beginning of the vector
   // use std::partition
+  std::partition(v.begin(),v.end(),[](int n){return n%2==0;});
+  std::cout << v << '\n';
 
   // create another vector with the squares of the numbers in the first vector
   // use std::transform
+//  auto w = std::transform(std::execution::par,v.begin(),v.end(), [](int n){return n*n;} );
+  auto w = std::transform(v.begin(),v.end(),[](int n){return n*n;});
+  std::cout << w << '\n';
 
   // find the first multiple of 3 or 7
   // use std::find_if

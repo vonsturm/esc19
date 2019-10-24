@@ -19,7 +19,7 @@ std::ostream& operator<<(std::ostream& os, std::vector<T> const& c)
   return os;
 }
 
-std::vector<std::string> entries(/* add the right arguments here */)
+std::vector<std::string> entries(DIR*dir)
 {
   std::vector<std::string> result;
 
@@ -36,6 +36,11 @@ std::vector<std::string> entries(/* add the right arguments here */)
   // for (auto* r = &entry; readdir_r(dir, &entry, &r) == 0 && r; ) {
   //   // here `entry.d_name` is the name of the current entry
   // }
+  dirent entry;
+
+  for (auto* r = &entry; readdir_r(dir, &entry, &r) == 0 && r; ) {
+    result.push_back(r->d_name);
+  }
 
   return result;
 }
@@ -48,7 +53,11 @@ int main(int argc, char* argv[])
   // relevant functions and data structures are
   // DIR* opendir(const char* name);
   // int  closedir(DIR* dirp);
+  auto d = std::shared_ptr<DIR>{
+    opendir(name.c_str()),
+    [](auto d) { closedir(d); std::cout << "I have been destroyed :)" << std::endl; }
+  };
 
-  std::vector<std::string> v = entries(/* add the right argument here */);
+  std::vector<std::string> v = entries(d.get());
   std::cout << v << '\n';
 }

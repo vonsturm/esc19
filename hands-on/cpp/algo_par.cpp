@@ -26,24 +26,36 @@ int main()
   {
     auto t0 = std::chrono::high_resolution_clock::now();
     // sum all the elements of the vector with std::accumulate
+    auto sum = std::accumulate(v.begin(),v.end(),0);
     auto t1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> d = t1 - t0;
-    std::cout << " in " << d.count() << " s\n";
+    std::cout << sum << " in " << d.count() << " s\n";
   }
 
   {
     auto t0 = std::chrono::high_resolution_clock::now();
     // sum all the elements of the vector with std::reduce, sequential policy
     // NB you need to pass the initial value
+    auto sum = std::reduce(std::execution::seq,v.begin(),v.end(),0);
     auto t1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> d = t1 - t0;
-    std::cout << " in " << d.count() << " s\n";
+    std::cout << sum << " in " << d.count() << " s\n";
   }
 
   {
     auto t0 = std::chrono::high_resolution_clock::now();
     // sum all the elements of the vector with std::reduce, parallel policy
     // NB you need to pass the initial value
+    auto sum = std::reduce(std::execution::par,v.begin(),v.end(),0);
+    auto t1 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<float> d = t1 - t0;
+    std::cout << sum << " in " << d.count() << " s\n";
+  }
+
+  {
+    auto t0 = std::chrono::high_resolution_clock::now();
+    // sort the vector with std::sort
+    std::sort(v.begin(),v.end());
     auto t1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> d = t1 - t0;
     std::cout << " in " << d.count() << " s\n";
@@ -52,6 +64,7 @@ int main()
   {
     auto t0 = std::chrono::high_resolution_clock::now();
     // sort the vector with std::sort
+    std::sort(std::execution::seq,v.begin(),v.end());
     auto t1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> d = t1 - t0;
     std::cout << " in " << d.count() << " s\n";
@@ -60,6 +73,7 @@ int main()
   {
     auto t0 = std::chrono::high_resolution_clock::now();
     // sort the vector with std::sort, parallel policy
+    std::sort(std::execution::par,v.begin(),v.end());
     auto t1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> d = t1 - t0;
     std::cout << " in " << d.count() << " s\n";
